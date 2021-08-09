@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { AddPointsDialogComponent } from './add-points-dialog/add-points-dialog.component';
 
 @Component({
   selector: 'app-house-card',
@@ -12,10 +14,21 @@ export class HouseCardComponent implements OnInit {
   @Input() subtitle!: string;
   @Input() title!: string;
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    console.log(this.title + " initted!");
   }
 
+  openDialog() {
+    const dialogRef = this.dialog.open(AddPointsDialogComponent, {
+      data: {
+        height: '400px',
+        width: '600px'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result: string) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 }

@@ -1,6 +1,4 @@
-<mat-card
-  [style.background-image]="bgColor"
->
+<mat-card [style.background-image]="bgColor">
   <mat-card-title>{{ title }}</mat-card-title>
   <mat-card-subtitle>{{ subtitle }}</mat-card-subtitle>
   <img mat-card-image
@@ -9,7 +7,7 @@
   >
   <mat-card-content>4000</mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button>Add Points</button>
+    <button mat-raised-button (click)="openDialog()">Add Points</button>
   </mat-card-actions>
   <mat-card-footer></mat-card-footer>
 </mat-card>

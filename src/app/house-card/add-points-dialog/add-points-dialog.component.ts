@@ -21,6 +21,9 @@ export class AddPointsDialogComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // create Form or Reactive Form and hook up Form Group and Form Control
+  // use error state matcher found here: [https://material.angular.io/components/select/overview] and inject into select elements
+
   // closeDialog() {
   //   this.dialogRef.close('Bet sum');
   // }

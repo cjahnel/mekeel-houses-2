@@ -13,8 +13,11 @@ export class HouseCardComponent implements OnInit {
   @Input() imgSrc!: string;
   @Input() subtitle!: string;
   @Input() title!: string;
+  total: number;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog) {
+    this.total = 0;
+  }
 
   ngOnInit(): void {
   }

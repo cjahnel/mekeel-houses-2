@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "mekeel-houses": {
+      "hosting": {
+        "mekeel-houses": [
+          "mekeel-houses"
+        ]
+      }
+    }
+  }
+}

@@ -1,4 +1,8 @@
 import { NgModule } from '@angular/core';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -19,6 +23,17 @@ import { AddPointsDialogComponent } from './house-card/add-points-dialog/add-poi
 import { HouseCardComponent } from './house-card/house-card.component';
 import { MainComponent } from './main/main.component';
 
+var firebaseConfig = {
+  apiKey: "AIzaSyAcMv9p9tgz8S4Y3BcBLcQu3oHBFD0mUkk",
+  authDomain: "mekeel-houses.firebaseapp.com",
+  databaseURL: "https://mekeel-houses.firebaseio.com",
+  projectId: "mekeel-houses",
+  storageBucket: "mekeel-houses.appspot.com",
+  messagingSenderId: "555757491083",
+  appId: "1:555757491083:web:4aeeb402a90e3da03dd58e",
+  measurementId: "G-KRFCDTJ4YW"
+};
+
 @NgModule({
   declarations: [
     AddPointsDialogComponent,
@@ -29,9 +44,13 @@ import { MainComponent } from './main/main.component';
     MainComponent
   ],
   imports: [
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
+    FormsModule,
     MatButtonModule,
     MatCardModule,
     MatDatepickerModule,
@@ -41,7 +60,8 @@ import { MainComponent } from './main/main.component';
     MatInputModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatToolbarModule
+    MatToolbarModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } },

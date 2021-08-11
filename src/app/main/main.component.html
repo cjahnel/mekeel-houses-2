@@ -1,30 +1,15 @@
 <main class="container">
-  <app-house-card class="item"
-    bgColor="linear-gradient(to bottom right,#c75548,red)"
-    imgAlt="candle"
-    imgSrc="../../../assets/candle.svg"
-    subtitle="1000"
-    title="Gideon"
-  ></app-house-card>
-  <app-house-card class="item"
-    bgColor="linear-gradient(to bottom right,#2ecc71,#035f03)"
-    imgAlt="crook"
-    imgSrc="../../../assets/crook.svg"
-    subtitle="1000"
-    title="David"
-  ></app-house-card>
-  <app-house-card class="item"
-    bgColor="linear-gradient(to bottom right,#dab319,#ff0)"
-    imgAlt="crown"
-    imgSrc="../../../assets/crown.svg"
-    subtitle="1000"
-    title="Esther"
-  ></app-house-card>
-  <app-house-card class="item"
-    bgColor="linear-gradient(to bottom right,#8e44ad,#531053)"
-    imgAlt="gavel"
-    imgSrc="../../../assets/gavel.svg"
-    subtitle="1000"
-    title="Deborah"
-  ></app-house-card>
+  <div class="row">
+    <app-house-card class="item col-md-3" *ngFor="let houseCardData of houseCardsData"
+      [bgColor]="houseCardData.bgColor"
+      [house]="houseCardData.house"
+      [houses]="houses"
+      [housesCollection]="housesCollection"
+      [imgAlt]="houseCardData.imgAlt"
+      [imgSrc]="houseCardData.imgSrc"
+      [pointEntriesCollection]="pointEntriesCollection"
+      [subtitle]="houseCardData.subtitle"
+      [title]="houseCardData.title"
+    ></app-house-card>
+  </div>
 </main>

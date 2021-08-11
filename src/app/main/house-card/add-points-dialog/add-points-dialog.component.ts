@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface DialogData {
-  height: string,
-  width: string
+  custom: string
 }
 
 @Component({
@@ -12,6 +12,15 @@ export interface DialogData {
   styleUrls: ['./add-points-dialog.component.css']
 })
 export class AddPointsDialogComponent implements OnInit {
+  form = new FormGroup({
+    date: new FormControl('', Validators.required),
+    amount: new FormControl('', Validators.required),
+    studentName: new FormControl('', Validators.required),
+    studentGrade: new FormControl('', Validators.required),
+    note: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(100)]),
+    house: new FormControl('', Validators.required),
+    teacherName: new FormControl('', Validators.required)
+  });
 
   constructor(
     public dialogRef: MatDialogRef<AddPointsDialogComponent>,

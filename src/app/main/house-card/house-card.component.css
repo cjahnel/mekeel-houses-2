@@ -1,0 +1,17 @@
+mat-card {
+  color: whitesmoke;
+  margin: 4%;
+  text-align: center;
+}
+
+mat-card-subtitle {
+  color: whitesmoke;
+}
+
+mat-card-actions > button {
+  margin-bottom: 10px;
+}
+
+img {
+  width: 50%;
+}

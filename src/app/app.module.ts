@@ -19,8 +19,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
-import { AddPointsDialogComponent } from './house-card/add-points-dialog/add-points-dialog.component';
-import { HouseCardComponent } from './house-card/house-card.component';
+import { AddPointsDialogComponent } from './main/house-card/add-points-dialog/add-points-dialog.component';
+import { HouseCardComponent } from './main/house-card/house-card.component';
 import { MainComponent } from './main/main.component';
 
 var firebaseConfig = {

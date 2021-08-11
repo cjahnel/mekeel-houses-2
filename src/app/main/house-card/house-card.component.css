@@ -4,12 +4,21 @@ mat-card {
   text-align: center;
 }
 
-mat-card-subtitle {
-  color: whitesmoke;
-}
-
 mat-card-actions > button {
   margin-bottom: 10px;
+}
+
+mat-card-content {
+  font-size: x-large;
+}
+
+mat-card-subtitle {
+  color: whitesmoke;
+  font-size: large;
+}
+
+mat-card-title {
+  font-size: xx-large;
 }
 
 img {

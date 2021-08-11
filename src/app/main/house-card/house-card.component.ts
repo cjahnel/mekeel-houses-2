@@ -28,7 +28,6 @@ export class HouseCardComponent {
     private firestore: AngularFirestore
   ) {
     this.total = 0;
-    // Object.assign(this, houseCardData)
   }
 
   // ngOnInit(): void {

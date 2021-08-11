@@ -1,12 +1,11 @@
 <h2 mat-dialog-title>Dialog Title</h2>
-<!-- Put the form fields in a flex container to make them spaced out -->
 <mat-dialog-content>
   <form [formGroup]="form" class="container">
     <div class="row">
       <mat-form-field hideRequiredMarker class="col-md-6">
         <mat-label>Date</mat-label>
         <input matInput [matDatepicker]="datepicker" formControlName="date" required>
-        <mat-datepicker-toggle matSufix [for]="datepicker"></mat-datepicker-toggle>
+        <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
         <mat-datepicker #datepicker></mat-datepicker>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="col-md-6">

@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
@@ -22,17 +23,6 @@ import { HeaderComponent } from './header/header.component';
 import { AddPointsDialogComponent } from './main/house-card/add-points-dialog/add-points-dialog.component';
 import { HouseCardComponent } from './main/house-card/house-card.component';
 import { MainComponent } from './main/main.component';
-
-var firebaseConfig = {
-  apiKey: "AIzaSyAcMv9p9tgz8S4Y3BcBLcQu3oHBFD0mUkk",
-  authDomain: "mekeel-houses.firebaseapp.com",
-  databaseURL: "https://mekeel-houses.firebaseio.com",
-  projectId: "mekeel-houses",
-  storageBucket: "mekeel-houses.appspot.com",
-  messagingSenderId: "555757491083",
-  appId: "1:555757491083:web:4aeeb402a90e3da03dd58e",
-  measurementId: "G-KRFCDTJ4YW"
-};
 
 @NgModule({
   declarations: [
@@ -45,7 +35,7 @@ var firebaseConfig = {
   ],
   imports: [
     AngularFireAuthModule,
-    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AppRoutingModule,
     BrowserAnimationsModule,

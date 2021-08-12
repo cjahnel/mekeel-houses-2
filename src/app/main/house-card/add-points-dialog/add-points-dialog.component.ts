@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -11,7 +11,8 @@ export interface DialogData {
   templateUrl: './add-points-dialog.component.html',
   styleUrls: ['./add-points-dialog.component.css']
 })
-export class AddPointsDialogComponent implements OnInit {
+export class AddPointsDialogComponent {
+  pointsRubricUrl = "https://docs.google.com/spreadsheets/d/1_BdWMlyx3JnN3fTEHw3xMeLkIAkM7-04/edit?usp=sharing&ouid=112595188143955831640&rtpof=true&sd=true";
   form = new FormGroup({
     date: new FormControl('', Validators.required),
     amount: new FormControl('', Validators.required),
@@ -27,8 +28,8 @@ export class AddPointsDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) { }
 
-  ngOnInit(): void {
-  }
+  // ngOnInit(): void {
+  // }
 
   // create Form or Reactive Form and hook up Form Group and Form Control
   // use error state matcher found here: [https://material.angular.io/components/select/overview] and inject into select elements

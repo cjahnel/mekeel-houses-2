@@ -1,59 +1,72 @@
 <h2 mat-dialog-title>Dialog Title</h2>
 <mat-dialog-content>
   <form [formGroup]="form" class="container">
-    <div class="row">
+    <div class="row mb-2">
       <mat-form-field hideRequiredMarker class="col-md-6">
         <mat-label>Date</mat-label>
         <input matInput [matDatepicker]="datepicker" formControlName="date" required>
         <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
         <mat-datepicker #datepicker></mat-datepicker>
+        <mat-hint>Type a date in MM/DD/YYYY format or use the Calendar icon</mat-hint>
+        <mat-error>This field is required</mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="col-md-6">
         <mat-label>Amount</mat-label>
         <input matInput type="number" formControlName="amount" required>
-        <!-- <mat-hint align="end">This is a hint for the input</mat-hint> -->
+        <mat-hint>Please refer to <a [href]="pointsRubricUrl" target="_blank">this rubric</a></mat-hint>
+        <mat-error>This field is required</mat-error>
       </mat-form-field>
     </div>
-    <div class="row">
+    <div class="row mb-2">
       <mat-form-field hideRequiredMarker class="col-md-6">
         <mat-label>Student Name</mat-label>
         <input matInput type="text" formControlName="studentName" required>
+        <mat-hint>Start Typing a name to use Autocomplete</mat-hint>
+        <mat-error>This field is required</mat-error>
       </mat-form-field>
       <mat-form-field hideRequiredMarker class="col-md-6">
         <mat-label>Student Grade</mat-label>
         <mat-select formControlName="studentGrade" required>
-          <mat-option>K</mat-option>
-          <mat-option>1</mat-option>
-          <mat-option>2</mat-option>
-          <mat-option>3</mat-option>
-          <mat-option>4</mat-option>
-          <mat-option>5</mat-option>
-          <mat-option>6</mat-option>
-          <mat-option>7</mat-option>
-          <mat-option>8</mat-option>
-          <mat-option>9</mat-option>
-          <mat-option>10</mat-option>
-          <mat-option>11</mat-option>
-          <mat-option>12</mat-option>
+          <mat-option value="K">K</mat-option>
+          <mat-option value="1">1</mat-option>
+          <mat-option value="2">2</mat-option>
+          <mat-option value="3">3</mat-option>
+          <mat-option value="4">4</mat-option>
+          <mat-option value="5">5</mat-option>
+          <mat-option value="6">6</mat-option>
+          <mat-option value="7">7</mat-option>
+          <mat-option value="8">8</mat-option>
+          <mat-option value="9">9</mat-option>
+          <mat-option value="10">10</mat-option>
+          <mat-option value="11">11</mat-option>
+          <mat-option value="12">12</mat-option>
         </mat-select>
-        <mat-hint>This is a hint for the select</mat-hint>
+        <mat-error>This field is required</mat-error>
       </mat-form-field>
     </div>
-    <div class="row">
+    <div class="row mb-2">
       <mat-form-field hideRequiredMarker class="col-md-12">
         <mat-label>Note</mat-label>
-        <textarea matInput formControlName="note" required></textarea>
-        <mat-error>This is an error for the textarea</mat-error>
+        <textarea matInput formControlName="note" #note required></textarea>
+        <mat-hint align="start">Note must be 10-100 characters</mat-hint>
+        <mat-hint align="end">{{ note.value.length }} / 100</mat-hint>
+        <mat-error *ngIf="form.controls.note.hasError('required')">This field is required</mat-error>
+        <mat-error *ngIf="form.controls.note.hasError('minLength') && !form.controls.note.hasError('required')">
+          Your note must have at least 10 characters
+        </mat-error>
+        <mat-error *ngIf="form.controls.note.hasError('maxLength') && !form.controls.note.hasError('required')">
+          Your note must have at most 100 characters
+        </mat-error>
       </mat-form-field>
     </div>
-    <div class="row">
+    <div class="row mb-2">
       <mat-form-field hideRequiredMarker class="col-md-6">
         <mat-label>Student House</mat-label>
         <mat-select formControlName="house" required>
-          <mat-option>David</mat-option>
-          <mat-option>Deborah</mat-option>
-          <mat-option>Esther</mat-option>
-          <mat-option>Gideon</mat-option>
+          <mat-option value="David">David</mat-option>
+          <mat-option value="Deborah">Deborah</mat-option>
+          <mat-option value="Esther">Esther</mat-option>
+          <mat-option value="Gideon">Gideon</mat-option>
         </mat-select>
         <mat-hint>This is a hint for the select</mat-hint>
       </mat-form-field>
@@ -67,5 +80,5 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="form">Confirm</button>
+  <button mat-button [mat-dialog-close]="form.value" [disabled]="form.invalid">Confirm</button>
 </mat-dialog-actions>

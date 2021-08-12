@@ -50,6 +50,7 @@ export class AuthService {
   login() {
     this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
   }
+  
   logout() {
     this.auth.signOut();
   }

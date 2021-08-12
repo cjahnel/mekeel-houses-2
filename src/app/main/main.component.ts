@@ -51,7 +51,18 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.houses.pipe(take(1)).subscribe(houses => {
       console.table(houses);
-    })
+    });
+
+    this.houses.subscribe(houses => {
+      const housesRanked = houses.sort((a, b) => b.points - a.points);
+      const newArray = housesRanked.map((house, index) => {
+        return {
+          rank: index + 1,
+          houseName: house.name
+        }
+      });
+      console.table(newArray);
+    });
   }
 
   generateHouseCardsData(): any {

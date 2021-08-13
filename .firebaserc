@@ -1,14 +1,17 @@
 {
+  "projects": {
+    "default": "mekeel-houses"
+  },
   "targets": {
     "mekeel-houses": {
       "hosting": {
-        "mekeel-houses": [
+        "v2": [
+          "mekeelhouses"
+        ],
+        "v1": [
           "mekeel-houses"
         ]
       }
     }
-  },
-  "projects": {
-    "default": "mekeel-houses"
   }
 }

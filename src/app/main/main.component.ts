@@ -1,6 +1,6 @@
-import { Component, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export interface House {
@@ -26,7 +26,6 @@ export interface PointEntry {
   styleUrls: ['./main.component.css']
 })
 export class MainComponent {
-  houses: House[];
   houses$: Observable<House[]>;
   housesCollection: AngularFirestoreCollection<House>;
   pointEntriesCollection: AngularFirestoreCollection<PointEntry>;
@@ -44,16 +43,7 @@ export class MainComponent {
           })
         })
       );
-    this.houses$.subscribe(houses => {
-      this.houses = houses;
-      console.table(this.houses);
-    });
     this.pointEntriesCollection = this.firestore.collection('point-entries');
   }
 
-  // getRank(house: House): Observable<number> {
-  //   return this.houses$.pipe(
-  //     map(houses => houses.indexOf(house) + 1)
-  //   );
-  // }
 }

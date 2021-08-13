@@ -1,9 +1,8 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
-import * as firebase from 'firebase';
-import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import firebase from 'firebase/app';
+import { first } from 'rxjs/operators';
 import { AuthService } from 'src/app/service/auth.service';
 import { House, PointEntry } from '../main.component';
 import { AddPointsDialogComponent } from './add-points-dialog/add-points-dialog.component';
@@ -30,8 +29,6 @@ export class HouseCardComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.houseDoc = this.housesCollection.doc(this.house.id);
-    // this.rank = 1;
-    // this.rank$.subscribe(rank => this.rank = rank);
   }
 
   ngOnChanges(): void {
@@ -73,12 +70,12 @@ export class HouseCardComponent implements OnInit, OnChanges {
     });
 
     dialogRef.afterClosed().pipe(
-      take(1)
+      first()
     ).subscribe(newEntry => {
       if (!newEntry) {
         return;
       }
-      newEntry.date = firebase.default.firestore.Timestamp.fromDate(newEntry.date);
+      newEntry.date = firebase.firestore.Timestamp.fromDate(newEntry.date);
       this.pointEntriesCollection.add(newEntry);
       this.houseDoc.update({
         points: this.house.points + newEntry.amount

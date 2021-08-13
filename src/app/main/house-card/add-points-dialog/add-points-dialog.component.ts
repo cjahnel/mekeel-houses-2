@@ -13,7 +13,8 @@ export interface DialogData {
   styleUrls: ['./add-points-dialog.component.css']
 })
 export class AddPointsDialogComponent {
-  pointsRubricUrl = "https://docs.google.com/spreadsheets/d/1_BdWMlyx3JnN3fTEHw3xMeLkIAkM7-04/edit?usp=sharing&ouid=112595188143955831640&rtpof=true&sd=true";
+  readonly pointsRubricUrl = "https://docs.google.com/spreadsheets/d/1_BdWMlyx3JnN3fTEHw3xMeLkIAkM7-04/edit?usp=sharing&ouid=112595188143955831640&rtpof=true&sd=true";
+
   form: FormGroup;
   house: House;
 
@@ -34,13 +35,4 @@ export class AddPointsDialogComponent {
     });
   }
 
-  // ngOnInit(): void {
-  // }
-
-  // create Form or Reactive Form and hook up Form Group and Form Control
-  // use error state matcher found here: [https://material.angular.io/components/select/overview] and inject into select elements
-
-  // closeDialog() {
-  //   this.dialogRef.close('Bet sum');
-  // }
 }

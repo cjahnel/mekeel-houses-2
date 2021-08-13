@@ -2,55 +2,56 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { first, share, switchMap } from 'rxjs/operators';
 
-// export interface Roles {
-//   admin?: boolean;
-//   benevolentDictator?: boolean;
-//   teacher?: boolean;
-// }
+export interface Roles {
+  admin?: boolean;
+  benevolentDictator?: boolean;
+  teacher?: boolean;
+}
 
-// export interface User {
-//   displayName?: string;
-//   email: string;
-//   photoUrl?: string;
-//   roles?: Roles;
-//   uid: string;
-// }
+export interface User {
+  displayName?: string;
+  email: string;
+  photoUrl?: string;
+  roles?: Roles;
+  uid: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  isTeacher$: Observable<boolean>;
   user$: Observable<firebase.User | null>;
 
   constructor(
     private auth: AngularFireAuth,
     private firestore: AngularFirestore
   ) {
+    this.isTeacher$ = this.auth.user
+      .pipe(
+        share(),
+        switchMap(firebaseUser => {
+          if (firebaseUser) {
+            return this.firestore.doc<User>(`users/${firebaseUser.uid}`).valueChanges()
+              .pipe(
+                first(),
+                switchMap(user => {
+                  return of(!!user?.roles?.teacher);
+                })
+              );
+          } else {
+            return of(false);
+          }
+        })
+      );
     this.user$ = this.auth.user;
-    // this.user = this.auth.user.pipe(
-    //   switchMap(user => {
-    //     if (user) {
-    //       return this.firestore.doc<firebase.User>(`users/${user.uid}`).valueChanges()
-    //     } else {
-    //       return of(null)
-    //     }
-    //   })
-    // )
-    // this.user = this.afAuth.authState.pipe(
-    //   switchMap(user => {
-    //     if (user) {
-    //       return this.firestore.doc<User>(`users/${user.uid}`).valueChanges()
-    //     } else {
-    //       return of(null);
-    //     }
-    //   })
-    // )
   }
 
-  login(): void {
-    this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  async login(): Promise<void> {
+    await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
 
     // let callback: ((snapshot: firebase.firestore.DocumentSnapshot<unknown>) => void) | null = null;
     // let metadataRef: DocumentReference<unknown> | null = null;
@@ -78,75 +79,9 @@ export class AuthService {
     //   }
     // });
   }
-
-  async isAdmin(): Promise<boolean | undefined> {
-    const currentUser = await this.auth.currentUser;
-    const idTokenResult = await currentUser?.getIdTokenResult();
-    return idTokenResult?.claims.admin;
-  }
   
-  logout(): void {
-    this.auth.signOut();
+  async logout(): Promise<void> {
+    await this.auth.signOut();
   }
 
-  // async login() {
-  //   await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-  //   this.updateUserData(this.auth.user)
-  // }
-  // logout() {
-  //   this.auth.signOut();
-  // }
-
-  // async login() {
-  //   await this.afAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-  //   this.afAuth.user
-  //   const provider = new auth.GoogleAuthProvider();
-  //   const credential = await this.afAuth.signInWithPopup(provider);
-  //   return this.updateUserData(credential.user);
-  // }
-
-  // async signOut() {
-  //   await this.afAuth.signOut();
-  //   return this.router.navigate(['/']);
-  // }
-
-  // private updateUserData({ uid, email, displayName, photoURL }: Observable<firebase.User>) {
-  //   const userRef = this.firestore.doc(`users/${uid}`);
-
-  //   const data = {
-  //     uid,
-  //     email,
-  //     displayName,
-  //     photoURL,
-  //   };
-
-  //   return userRef.set(data, { merge: true });
-  // }
-
-  // private checkAuthorization(user: User, allowedRoles: string[]): boolean {
-  //   if (!user || !user.roles) {
-  //     return false;
-  //   }
-  //   for (const role of allowedRoles) {
-  //     if (user.roles[role]) {
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // }
-
-  // isTeacher(user: User): boolean {
-  //   const allowed = ['teacher', 'admin', 'benevolentDictator'];
-  //   return this.checkAuthorization(user, allowed);
-  // }
-
-  // isAdmin(user: User): boolean {
-  //   const allowed = ['admin', 'benevolentDictator'];
-  //   return this.checkAuthorization(user, allowed);
-  // }
-
-  // isBenevolentDictator(user: User): boolean {
-  //   const allowed = ['benevolentDictator'];
-  //   return this.checkAuthorization(user, allowed);
-  // }
 }

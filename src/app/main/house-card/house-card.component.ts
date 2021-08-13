@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { AuthService } from 'src/app/service/auth.service';
 import { House, PointEntry } from '../main.component';
 import { AddPointsDialogComponent } from './add-points-dialog/add-points-dialog.component';
 
@@ -26,6 +27,7 @@ export class HouseCardComponent implements OnInit {
   rank: string;
 
   constructor(
+    public auth: AuthService,
     public dialog: MatDialog,
     private firestore: AngularFirestore
   ) { }

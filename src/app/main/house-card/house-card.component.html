@@ -6,7 +6,7 @@
     [alt]="imgAlt"
   >
   <mat-card-content><strong>{{ house.points }}</strong></mat-card-content>
-  <mat-card-actions>
+  <mat-card-actions *ngIf="auth.user$ | async">
     <button mat-raised-button (click)="openDialog()">Add Points</button>
   </mat-card-actions>
 </mat-card>

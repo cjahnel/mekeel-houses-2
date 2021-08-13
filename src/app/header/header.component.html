@@ -2,12 +2,7 @@
   <mat-toolbar color="primary">
     <span>Mekeel Houses</span>
     <span class="example-spacer"></span>
-    <button mat-raised-button (click)="auth.login()">Log In</button>
-    <!-- <div *ngIf="auth.user$ | async as user; else login">
-      <button class="button btn btn-secondary" (click)="auth.signOut()">Sign Out</button>
-    </div>
-    <ng-template #login>
-      <button class="button btn btn-secondary" (click)="auth.googleSignIn()">Log In</button>
-    </ng-template> -->
+    <button mat-raised-button *ngIf="auth.user$ | async" (click)="auth.logout()">Log Out</button>
+    <button mat-raised-button *ngIf="(auth.user$ | async) === null" (click)="auth.login()">Log In</button>
   </mat-toolbar>
 </header>

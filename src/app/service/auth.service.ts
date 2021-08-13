@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, DocumentReference } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
+import { Observable } from 'rxjs';
 
 // export interface Roles {
 //   admin?: boolean;
@@ -21,12 +22,13 @@ import firebase from 'firebase/app';
   providedIn: 'root'
 })
 export class AuthService {
-  // user: Observable<User | undefined | null>;
+  user$: Observable<firebase.User | null>;
 
   constructor(
     private auth: AngularFireAuth,
     private firestore: AngularFirestore
   ) {
+    this.user$ = this.auth.user;
     // this.user = this.auth.user.pipe(
     //   switchMap(user => {
     //     if (user) {
@@ -50,31 +52,31 @@ export class AuthService {
   login(): void {
     this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
 
-    let callback: ((snapshot: firebase.firestore.DocumentSnapshot<unknown>) => void) | null = null;
-    let metadataRef: DocumentReference<unknown> | null = null;
-    let listener: () => void;
-    this.auth.onAuthStateChanged(user => {
-      // Remove previous listener.
-      if (callback) {
-        // metadataRef.off('value', callback);
-        listener();
-      }
-      // On user login add new listener.
-      if (user) {
-        // Check if refresh is required.
-        metadataRef = this.firestore.doc(`metadata/${user.uid}/refreshTime`).ref;
-        // metadataRef = firebase.database().ref('metadata/' + user.uid + '/refreshTime');
-        callback = (snapshot: firebase.firestore.DocumentSnapshot<unknown>) => {
-          // Force refresh to pick up the latest custom claims changes.
-          // Note this is always triggered on first call. Further optimization could be
-          // added to avoid the initial trigger when the token is issued and already contains
-          // the latest claims.
-          user.getIdToken(true);
-        };
-        // Subscribe new listener to changes on that node.
-        listener = metadataRef.onSnapshot(callback);
-      }
-    });
+    // let callback: ((snapshot: firebase.firestore.DocumentSnapshot<unknown>) => void) | null = null;
+    // let metadataRef: DocumentReference<unknown> | null = null;
+    // let listener: () => void;
+    // this.auth.onAuthStateChanged(user => {
+    //   // Remove previous listener.
+    //   if (callback) {
+    //     // metadataRef.off('value', callback);
+    //     listener();
+    //   }
+    //   // On user login add new listener.
+    //   if (user) {
+    //     // Check if refresh is required.
+    //     metadataRef = this.firestore.doc(`metadata/${user.uid}/refreshTime`).ref;
+    //     // metadataRef = firebase.database().ref('metadata/' + user.uid + '/refreshTime');
+    //     callback = (snapshot: firebase.firestore.DocumentSnapshot<unknown>) => {
+    //       // Force refresh to pick up the latest custom claims changes.
+    //       // Note this is always triggered on first call. Further optimization could be
+    //       // added to avoid the initial trigger when the token is issued and already contains
+    //       // the latest claims.
+    //       user.getIdToken(true);
+    //     };
+    //     // Subscribe new listener to changes on that node.
+    //     listener = metadataRef.onSnapshot(callback);
+    //   }
+    // });
   }
 
   async isAdmin(): Promise<boolean | undefined> {

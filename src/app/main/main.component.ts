@@ -53,20 +53,21 @@ export class MainComponent implements OnInit {
       console.table(houses);
     });
 
-    this.houses.subscribe(houses => {
-      const housesRanked = houses.sort((a, b) => b.points - a.points);
-      const newArray = housesRanked.map((house, index) => {
-        return {
-          rank: index + 1,
-          houseName: house.name
-        }
-      });
-      console.table(newArray);
-    });
+    // this.houses.subscribe(houses => {
+    //   const housesRanked = houses.sort((a, b) => b.points - a.points);
+    //   const newArray = housesRanked.map((house, index) => {
+    //     return {
+    //       rank: index + 1,
+    //       houseName: house.name
+    //     }
+    //   });
+    //   console.table(newArray);
+    // });
   }
 
   generateHouseCardsData(): any {
     this.houses.subscribe(houses => {
+      this.houseCardsData = [];
       houses.forEach(house => {
         this.houseCardsData.push({
           house,

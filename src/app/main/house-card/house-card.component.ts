@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
 import * as firebase from 'firebase';
 import { Observable } from 'rxjs';
@@ -13,27 +13,54 @@ import { AddPointsDialogComponent } from './add-points-dialog/add-points-dialog.
   templateUrl: './house-card.component.html',
   styleUrls: ['./house-card.component.css']
 })
-export class HouseCardComponent implements OnInit {
-  @Input() bgColor: string;
+export class HouseCardComponent implements OnInit, OnChanges {
   @Input() house: House;
-  @Input() houses: Observable<House[]>;
   @Input() housesCollection: AngularFirestoreCollection<House>;
-  @Input() imgAlt: string;
-  @Input() imgSrc: string;
-  @Input() pointEntriesCollection: AngularFirestoreCollection<PointEntry>
-  @Input() subtitle: string;
-  @Input() title: string;
+  @Input() pointEntriesCollection: AngularFirestoreCollection<PointEntry>;
+
+  bgColor: string;
   houseDoc: AngularFirestoreDocument<House>;
-  rank: string;
+  imgAlt: string;
+  imgSrc: string;
 
   constructor(
     public auth: AuthService,
-    public dialog: MatDialog,
-    private firestore: AngularFirestore
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
-    this.houseDoc = this.firestore.collection('houses').doc(this.house.id);
+    this.houseDoc = this.housesCollection.doc(this.house.id);
+    // this.rank = 1;
+    // this.rank$.subscribe(rank => this.rank = rank);
+  }
+
+  ngOnChanges(): void {
+    this.setCardStyles();
+  }
+
+  setCardStyles(): void {
+    switch (this.house.name) {
+      case 'David':
+        this.bgColor = 'linear-gradient(to bottom right,#2ecc71,#035f03)',
+        this.imgAlt = 'crook',
+        this.imgSrc = '../../../assets/crook.svg'
+        break;
+      case 'Deborah':
+        this.bgColor = 'linear-gradient(to bottom right,#8e44ad,#531053)',
+        this.imgAlt = 'gavel',
+        this.imgSrc = '../../../assets/gavel.svg'
+        break;
+      case 'Esther':
+        this.bgColor = 'linear-gradient(to bottom right,#dab319,#ff0)',
+        this.imgAlt = 'crown',
+        this.imgSrc = '../../../assets/crown.svg'
+        break;
+      case 'Gideon':
+        this.bgColor = 'linear-gradient(to bottom right,#c75548,red)',
+        this.imgAlt = 'candle',
+        this.imgSrc = '../../../assets/candle.svg'
+        break;
+    }
   }
 
   openDialog(): void {

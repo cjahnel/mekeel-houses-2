@@ -1,15 +1,9 @@
 <main class="container">
   <div class="row">
-    <app-house-card class="item col-lg-3 col-sm-6" *ngFor="let houseCardData of houseCardsData"
-      [bgColor]="houseCardData.bgColor"
-      [house]="houseCardData.house"
-      [houses]="houses"
+    <app-house-card class="item col-lg-3 col-sm-6" *ngFor="let house of houses$ | async"
+      [house]="house"
       [housesCollection]="housesCollection"
-      [imgAlt]="houseCardData.imgAlt"
-      [imgSrc]="houseCardData.imgSrc"
       [pointEntriesCollection]="pointEntriesCollection"
-      [subtitle]="houseCardData.subtitle"
-      [title]="houseCardData.title"
     ></app-house-card>
   </div>
 </main>

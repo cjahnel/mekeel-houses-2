@@ -30,7 +30,8 @@ export class AuthService {
     private auth: AngularFireAuth,
     private firestore: AngularFirestore
   ) {
-    this.isTeacher$ = this.auth.user
+    this.user$ = this.auth.user;
+    this.isTeacher$ = this.user$
       .pipe(
         share(),
         switchMap(firebaseUser => {
@@ -47,7 +48,6 @@ export class AuthService {
           }
         })
       );
-    this.user$ = this.auth.user;
   }
 
   async login(): Promise<void> {

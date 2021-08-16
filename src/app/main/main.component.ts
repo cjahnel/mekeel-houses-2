@@ -39,8 +39,8 @@ export class MainComponent {
             return {
               ...house,
               rank: index + 1
-            }
-          })
+            };
+          });
         })
       );
     this.pointEntriesCollection = this.firestore.collection('point-entries');

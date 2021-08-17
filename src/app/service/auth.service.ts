@@ -52,6 +52,10 @@ export class AuthService {
 
   async login(): Promise<void> {
     await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    const currentUser = await this.auth.currentUser;
+    if (currentUser !== null) {
+      this.firestore.doc<firebase.User>(`users/${currentUser?.uid}`).set(currentUser, { merge: true });
+    }
 
     // let callback: ((snapshot: firebase.firestore.DocumentSnapshot<unknown>) => void) | null = null;
     // let metadataRef: DocumentReference<unknown> | null = null;

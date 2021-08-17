@@ -1,9 +1,9 @@
 <main class="container">
-  <div class="row">
-    <app-house-card class="item col-lg-3 col-sm-6" *ngFor="let house of houses$ | async"
+  <article class="row">
+    <app-house-card class="col-lg-3 col-sm-6" *ngFor="let house of houses$ | async"
       [house]="house"
       [housesCollection]="housesCollection"
       [pointEntriesCollection]="pointEntriesCollection"
     ></app-house-card>
-  </div>
+  </article>
 </main>

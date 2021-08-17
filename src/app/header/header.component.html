@@ -1,7 +1,7 @@
 <header>
   <mat-toolbar color="primary">
     <span>Mekeel Houses</span>
-    <span class="example-spacer"></span>
+    <span class="spacer"></span>
     <button mat-raised-button *ngIf="auth.user$ | async" (click)="auth.logout()">Log Out</button>
     <button mat-raised-button *ngIf="(auth.user$ | async) === null" (click)="auth.login()">Log In</button>
   </mat-toolbar>

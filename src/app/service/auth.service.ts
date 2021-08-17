@@ -47,18 +47,6 @@ export class AuthService {
           }
         })
       );
-  }
-
-  async login(): Promise<void> {
-    await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-    const currentUser = await this.auth.currentUser;
-    if (currentUser !== null) {
-      this.firestore.doc<User>(`users/${currentUser.uid}`).set({
-        displayName: currentUser.displayName,
-        email: currentUser.email,
-        uid: currentUser.uid
-      }, { merge: true });
-    }
 
     // let callback: ((snapshot: firebase.firestore.DocumentSnapshot<unknown>) => void) | null = null;
     // let metadataRef: DocumentReference<unknown> | null = null;
@@ -85,6 +73,18 @@ export class AuthService {
     //     listener = metadataRef.onSnapshot(callback);
     //   }
     // });
+  }
+
+  async login(): Promise<void> {
+    await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    const currentUser = await this.auth.currentUser;
+    if (currentUser !== null) {
+      this.firestore.doc<User>(`users/${currentUser.uid}`).set({
+        displayName: currentUser.displayName,
+        email: currentUser.email,
+        uid: currentUser.uid
+      }, { merge: true });
+    }
   }
   
   async logout(): Promise<void> {

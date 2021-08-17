@@ -12,9 +12,8 @@ export interface Roles {
 }
 
 export interface User {
-  displayName?: string;
-  email: string;
-  photoUrl?: string;
+  displayName: string | null;
+  email: string | null;
   roles?: Roles;
   uid: string;
 }
@@ -54,7 +53,11 @@ export class AuthService {
     await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     const currentUser = await this.auth.currentUser;
     if (currentUser !== null) {
-      this.firestore.doc<firebase.User>(`users/${currentUser?.uid}`).set(currentUser, { merge: true });
+      this.firestore.doc<User>(`users/${currentUser.uid}`).set({
+        displayName: currentUser.displayName,
+        email: currentUser.email,
+        uid: currentUser.uid
+      }, { merge: true });
     }
 
     // let callback: ((snapshot: firebase.firestore.DocumentSnapshot<unknown>) => void) | null = null;

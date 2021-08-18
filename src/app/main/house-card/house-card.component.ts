@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import firebase from 'firebase/app';
 import { first } from 'rxjs/operators';
 import { AuthService } from 'src/app/service/auth.service';
@@ -24,7 +25,8 @@ export class HouseCardComponent implements OnInit, OnChanges {
 
   constructor(
     public auth: AuthService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -71,18 +73,18 @@ export class HouseCardComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().pipe(
       first()
-    ).subscribe(newEntry => {
+    ).subscribe(async newEntry => {
       if (!newEntry) {
         return;
       }
       newEntry.date = firebase.firestore.Timestamp.fromDate(newEntry.date);
-      this.pointEntriesCollection.add(newEntry);
-      this.houseDoc.update({
+      await this.pointEntriesCollection.add(newEntry);
+      await this.houseDoc.update({
         points: this.house.points + newEntry.amount
       });
-      console.group('Dialog Result');
-      console.log(newEntry);
-      console.groupEnd();
+      this.snackBar.open('Entry saved, House total updated', undefined, {
+        duration: 3000
+      });
     });
   }
 }

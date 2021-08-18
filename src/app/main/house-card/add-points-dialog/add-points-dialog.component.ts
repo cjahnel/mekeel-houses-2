@@ -37,12 +37,11 @@ export class AddPointsDialogComponent {
       teacherName: new FormControl({ value: '', disabled: true }, Validators.required)
     });
 
-    this.auth.user$
-      .pipe(
-        first()
-      ).subscribe(user => {
-        this.form.controls.teacherName.setValue(user?.displayName);
-      });
+    this.auth.user$.pipe(
+      first()
+    ).subscribe(user => {
+      this.form.controls.teacherName.setValue(user?.displayName);
+    });
   }
 
 }

@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import { Observable, of } from 'rxjs';
-import { first, share, switchMap } from 'rxjs/operators';
+import { map, share, switchMap } from 'rxjs/operators';
 
 export interface Roles {
   admin?: boolean;
@@ -30,23 +30,21 @@ export class AuthService {
     private firestore: AngularFirestore
   ) {
     this.user$ = this.auth.user;
-    this.isTeacher$ = this.user$
-      .pipe(
-        share(),
-        switchMap(firebaseUser => {
-          if (firebaseUser) {
-            return this.firestore.doc<User>(`users/${firebaseUser.uid}`).valueChanges()
-              .pipe(
-                first(),
-                switchMap(user => {
-                  return of(!!user?.roles?.teacher);
-                })
-              );
-          } else {
-            return of(false);
-          }
-        })
-      );
+    this.isTeacher$ = this.user$.pipe(
+      switchMap(firebaseUser => {
+        if (firebaseUser) {
+          return this.firestore.doc<User>(`users/${firebaseUser.uid}`).valueChanges()
+            .pipe(
+              map(user => {
+                return !!user?.roles?.teacher;
+              })
+            );
+        } else {
+          return of(false);
+        }
+      }),
+      share()
+    );
 
     // let callback: ((snapshot: firebase.firestore.DocumentSnapshot<unknown>) => void) | null = null;
     // let metadataRef: DocumentReference<unknown> | null = null;

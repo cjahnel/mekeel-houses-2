@@ -71,9 +71,7 @@ export class HouseCardComponent implements OnInit, OnChanges {
       }
     });
 
-    dialogRef.afterClosed().pipe(
-      first()
-    ).subscribe(async newEntry => {
+    dialogRef.afterClosed().subscribe(async newEntry => {
       if (!newEntry) {
         return;
       }

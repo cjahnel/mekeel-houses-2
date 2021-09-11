@@ -1,4 +1,9 @@
 <main class="container">
+  <mat-card id="notice-card">
+    Don't know the house or grade of a student? Visit
+    <a href="https://docs.google.com/spreadsheets/d/1GXJpLo8AON4_7qR3rw3UrYswYAiccUr_hVGQI5dwLKY/edit?usp=sharing"
+      target="_blank">this sheet</a>
+  </mat-card>
   <article class="row">
     <app-house-card class="col-lg-3 col-sm-6" *ngFor="let house of houses$ | async"
       [house]="house"

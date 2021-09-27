@@ -79,5 +79,5 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="form.value" [disabled]="form.invalid">Confirm</button>
+  <button mat-button [mat-dialog-close]="form.getRawValue()" [disabled]="form.invalid">Confirm</button>
 </mat-dialog-actions>
